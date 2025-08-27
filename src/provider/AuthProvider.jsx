@@ -4,16 +4,20 @@ import app from '../firebase/firabse.config';
 export const AuthContext = createContext();
 const auth = getAuth(app);
 const AuthProvider = ({children}) => {
-    const [user,setUser] = useState();
+    const [user,setUser] = useState(null);
+    const [loading,setLoading] = useState(true)
 
-    console.log(user)
+    console.log(user, loading)
+   
     const createUser=(email,password)=>{
+        setLoading(true)
         return createUserWithEmailAndPassword(auth,email,password);
     };
     const LogOut = ()=>{
         return signOut(auth);
     };
     const signIn = (email,password)=>{
+        setLoading(true)
         return signInWithEmailAndPassword(auth,email,password)
 
     }
@@ -21,7 +25,8 @@ const AuthProvider = ({children}) => {
 
     useEffect(()=>{
         const unsubcribe = onAuthStateChanged(auth,(currentUser)=>{
-            setUser(currentUser)
+            setUser(currentUser);
+            setLoading(false);
 
         });
         return ()=>{
@@ -34,7 +39,9 @@ const AuthProvider = ({children}) => {
         setUser,
         createUser,
         LogOut,
-        signIn
+        signIn,
+        loading,
+        setLoading
     }
 
 
