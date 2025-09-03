@@ -6,11 +6,11 @@ import Loading from '../pages/Loading';
 const PrivateRoute = ({children}) => {
   const {user, loading} = use(AuthContext);
   const location = useLocation() // jei jaygay click korse oi jaygar path
-  console.log(location)
+  // console.log(location)
   if(loading){
     return <Loading></Loading>;
   }
-  console.log(user)
+  // console.log(user)
   if(user && user?.email){
       return children ; // ei jaygay bhul koirsot
   }
